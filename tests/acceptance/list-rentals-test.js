@@ -33,8 +33,14 @@ test('should list avalible rentals', (assert) => {
   });
 });
 
-skip('should filter the list of rentals by city', (assert) => {
-
+test('should filter the list of rentals by city', (assert) => {
+  visit('/');
+  fillin('.list-filter input', 'Seattle');
+  keyEvent('.list-filter input', 'keyup', 69);
+  andThen(function() {
+    assert.equal(find('.listing').length, 1, 'should be 1 listing');
+    assert.equal(find('.listing .location:contains("Seattle")').length, 1, 'should contain 1 listing of Seattle');
+  });
 });
 
 
